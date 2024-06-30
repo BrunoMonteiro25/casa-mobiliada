@@ -3,11 +3,13 @@
 import styled from "styled-components";
 import { Box } from "@mui/material";
 
-import { SvgSearch } from "@/assets/iconsSvg";
-
 export const Container = styled.div`
   width: 100%;
   background-color: #fff;
+
+  @media (max-width: 800px) {
+    display: none;
+  }
 `;
 
 export const Menu = styled.nav`
@@ -202,4 +204,53 @@ export const Button = styled.button`
   &:hover {
     background-color: #01696e;
   }
+`;
+
+export const BoxCart = styled(Box)`
+  margin: 0;
+  padding: 0;
+  position: relative;
+
+  &::before {
+    content: "0";
+    width: 16px;
+    height: 16px;
+    background-color: #22a6ad;
+    position: absolute;
+    border-radius: 50%;
+    bottom: -2px;
+    left: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 12px;
+    cursor: pointer;
+  }
+`;
+
+export const ButtonCart = styled.button`
+  border: none;
+  background-color: #fff;
+`;
+
+export const OpenCart = styled(Box)`
+  display: ${(props) => (props.open ? "flex" : "none")} !important;
+  width: 342px;
+  height: 538px;
+  position: absolute;
+  top: 30px;
+  right: -171px;
+  background-color: #fff;
+  border-radius: 8px;
+`;
+
+export const CartHeader = styled(Box)`
+  width: 342px;
+  height: 37px;
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  background-color: #22a6ad;
+  border-radius: 8px 8px 0px 0px;
 `;

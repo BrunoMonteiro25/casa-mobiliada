@@ -26,6 +26,10 @@ import {
   Icon,
   Question,
   ButtonClose,
+  ButtonCart,
+  BoxCart,
+  OpenCart,
+  CartHeader,
 } from "./styled";
 
 // ASSETS
@@ -44,6 +48,7 @@ const theme = createTheme({
 export default function Header() {
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
   const [isOpenSearch, setIsOpenSearch] = useState(false);
+  const [isOpenCart, setIsOpenCart] = useState(false);
 
   const dropDownCategory = [
     {
@@ -158,9 +163,33 @@ export default function Header() {
               </ContentSearchBar>
             </Search>
 
-            <ButtonSvg>
-              <SvgCart />
-            </ButtonSvg>
+            <BoxCart>
+              <ButtonCart onClick={() => setIsOpenCart(true)}>
+                <SvgCart />
+              </ButtonCart>
+
+              <OpenCart open={isOpenCart}>
+                <CartHeader>
+                  <ButtonClose
+                    style={{
+                      backgroundColor: "transparent",
+                      color: "#fff",
+                      marginLeft: "20px",
+                      fontSize: "30px",
+                    }}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      setIsOpenCart(false);
+                    }}
+                  >
+                    <CloseIcon />
+                  </ButtonClose>
+                  <Typography variant="subtitle1" sx={{ color: "#fff" }}>
+                    Carrinho de Compras
+                  </Typography>
+                </CartHeader>
+              </OpenCart>
+            </BoxCart>
 
             <Button>Entrar</Button>
           </ContentSvg>
