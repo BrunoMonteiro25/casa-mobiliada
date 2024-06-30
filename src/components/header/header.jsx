@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 // STYLES
@@ -25,6 +25,7 @@ import {
   ContentSearchBar,
   Icon,
   Question,
+  ButtonClose,
 } from "./styled";
 
 // ASSETS
@@ -63,12 +64,20 @@ export default function Header() {
     },
   ];
 
-  const handleOpenAndCloseSearch = (e) => {
-    e.preventDefault();
-    setIsOpenSearch(!isOpenSearch);
-  };
+  const ref = useRef();
 
-  console.log("open", isOpenSearch);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        setIsOpenSearch(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -87,7 +96,7 @@ export default function Header() {
               <a href="#">Categorias</a>
               <ExpandMoreIcon />
 
-              <DropdownMenu isOpen={isOpenDropdown}>
+              <DropdownMenu $isOpen={isOpenDropdown}>
                 {dropDownCategory.map((item) => (
                   <DropdownItem key={item.name}>
                     <a href="#">
@@ -100,41 +109,54 @@ export default function Header() {
           </ul>
 
           <a href="/">
-            <Image src={Logo} alt="Casa Mobiliada" />
+            <Image
+              src={Logo}
+              alt="Casa Mobiliada"
+              width={144}
+              height={46}
+              priority
+            />
           </a>
 
           <ContentSvg>
-            <ButtonSvg onClick={handleOpenAndCloseSearch}>
+            <ButtonSvg onClick={() => setIsOpenSearch(true)}>
               <SvgSearch />
-              <Search open={isOpenSearch}>
-                <ContentSearchBar>
-                  <Icon>
-                    <CloseIcon />
-                  </Icon>
-                  <Question>
-                    <Typography variant="subtitle2">
-                      O que você está procurando?
-                    </Typography>
-                    <TextField
-                      fullWidth
-                      id="standard-basic"
-                      placeholder="Digite aqui..."
-                      variant="standard"
-                      sx={{
-                        marginTop: "20px",
-
-                        "& ::placeholder": {
-                          fontSize: "0.9rem",
-                        },
-                        "& .MuiInput-underline:after": {
-                          borderBottomColor: "#01696E",
-                        },
-                      }}
-                    />
-                  </Question>
-                </ContentSearchBar>
-              </Search>
             </ButtonSvg>
+            <Search open={isOpenSearch}>
+              <ContentSearchBar ref={ref}>
+                <Icon>
+                  <ButtonClose
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      setIsOpenSearch(false);
+                    }}
+                  >
+                    <CloseIcon />
+                  </ButtonClose>
+                </Icon>
+                <Question>
+                  <Typography variant="subtitle2">
+                    O que você está procurando?
+                  </Typography>
+                  <TextField
+                    fullWidth
+                    id="standard-basic"
+                    placeholder="Digite aqui..."
+                    variant="standard"
+                    sx={{
+                      marginTop: "20px",
+
+                      "& ::placeholder": {
+                        fontSize: "0.9rem",
+                      },
+                      "& .MuiInput-underline:after": {
+                        borderBottomColor: "#01696E",
+                      },
+                    }}
+                  />
+                </Question>
+              </ContentSearchBar>
+            </Search>
 
             <ButtonSvg>
               <SvgCart />

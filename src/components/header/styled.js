@@ -70,7 +70,7 @@ export const NavLink = styled.a`
 `;
 
 export const DropdownMenu = styled.ul`
-  display: ${(props) => (props.isOpen ? "flex" : "none")} !important;
+  display: ${({ $isOpen }) => ($isOpen ? "flex" : "none")} !important;
   /* display: flex; */
   position: absolute;
   top: 65px;
@@ -127,12 +127,12 @@ export const ContentSvg = styled(Box)`
   display: flex;
   align-items: center;
   gap: 20px;
+  position: relative;
 `;
 
 export const ButtonSvg = styled.button`
   border: none;
   background-color: #fff;
-  position: relative;
 `;
 
 export const Search = styled(Box)`
@@ -142,8 +142,8 @@ export const Search = styled(Box)`
   height: max-content;
   background-color: #fff;
   position: absolute;
-  right: -15px;
-  top: 35px;
+  right: 195px;
+  top: 40px;
   border-radius: 0.25rem;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   border: 1px solid #e0e0e0;
@@ -173,6 +173,12 @@ export const Icon = styled(Box)`
   width: 100%;
   display: flex;
   justify-content: flex-end;
+`;
+
+export const ButtonClose = styled.button`
+  cursor: pointer;
+  border: none;
+  background-color: #fff;
 `;
 
 export const Question = styled(Box)`
