@@ -5,7 +5,6 @@ import Image from "next/image";
 
 // STYLES
 import {
-  Box,
   createTheme,
   TextField,
   ThemeProvider,

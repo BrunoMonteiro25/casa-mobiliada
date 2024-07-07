@@ -7,7 +7,7 @@ export const Container = styled.div`
   width: 100%;
   background-color: #fff;
 
-  @media (max-width: 800px) {
+  @media (max-width: 633px) {
     display: none;
   }
 `;
@@ -56,6 +56,10 @@ export const Menu = styled.nav`
 
   @media (max-width: 1440px) {
     padding: 0px 100px;
+  }
+
+  @media (max-width: 800px) {
+    padding: 0px 20px;
   }
 `;
 
