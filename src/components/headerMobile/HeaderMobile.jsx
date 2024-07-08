@@ -1,6 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
+
+// STYLES
 import {
   Grid,
   Toolbar,
@@ -15,16 +18,6 @@ import {
   Divider,
   Drawer,
 } from "@mui/material";
-
-import { RiMenu2Fill } from "react-icons/ri";
-
-import Logo from "../../assets/logo.png";
-import { SvgCart } from "@/assets/iconsSvg";
-import CloseIcon from "@mui/icons-material/Close";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
 import {
   BoxCart,
   ButtonCart,
@@ -33,15 +26,23 @@ import {
   Container,
   OpenCart,
 } from "./styled";
-import Image from "next/image";
+
+// ASSETS
+import Logo from "../../assets/logo.png";
+import { RiMenu2Fill } from "react-icons/ri";
+import { SvgCart } from "@/assets/iconsSvg";
+import CloseIcon from "@mui/icons-material/Close";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 
 const HeaderMobile = () => {
   const [isOpenCart, setIsOpenCart] = useState(false);
   const [open, setOpen] = useState(false);
-  const [openDropdown, setOpenDroptdown] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(false);
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
+    setOpenDropdown(false);
   };
 
   const dropDownCategory = [
@@ -51,29 +52,29 @@ const HeaderMobile = () => {
     "Quarto",
   ];
 
-  const dataUser = ["Cadastre-se", "Entrar", "Minha conta"];
+  const dataUser = ["Minha conta"];
 
   const DrawerList = (
-    <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
+    <Box sx={{ width: 250 }} role="presentation">
       <List>
-        <ListItem disablePadding>
+        <ListItem disablePadding onClick={toggleDrawer(false)}>
           <ListItemButton>
-            <ListItemText primary="Home" />
+            <ListItemText primary="Home" sx={{ color: "#22a6ad" }} />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
           <Box>
-            <ListItemButton>
-              <ListItemText primary="Categorias" />
-              <ExpandMoreIcon />
+            <ListItemButton onClick={() => setOpenDropdown(!openDropdown)}>
+              <ListItemText primary="Categorias" sx={{ color: "#04292a" }} />
+              {openDropdown ? <ExpandLessIcon /> : <ExpandMoreIcon />}
             </ListItemButton>
           </Box>
         </ListItem>
         {openDropdown &&
-          dropDownCategory.map((text, index) => (
-            <ListItem key={text} disablePadding>
+          dropDownCategory.map((text) => (
+            <ListItem key={text} onClick={toggleDrawer(false)}>
               <ListItemButton>
-                <ListItemText primary={text} />
+                <ListItemText primary={text} sx={{ color: "#04292a" }} />
               </ListItemButton>
             </ListItem>
           ))}
@@ -81,12 +82,12 @@ const HeaderMobile = () => {
       <Divider />
       <List>
         {dataUser.map((text, index) => (
-          <ListItem key={text} disablePadding>
+          <ListItem key={text} disablePadding onClick={toggleDrawer(false)}>
             <ListItemButton>
               {/* <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon> */}
-              <ListItemText primary={text} />
+              <ListItemText primary={text} sx={{ color: "#04292a" }} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -150,7 +151,7 @@ const HeaderMobile = () => {
       </Container>
 
       {/* drawer menu */}
-      <Drawer open={open}>
+      <Drawer open={open} onClose={toggleDrawer(false)}>
         <Box sx={{ margin: "15px" }}>
           <IconButton
             edge="start"
